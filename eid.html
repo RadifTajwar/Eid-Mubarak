@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eid Money Ltd.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+Bengali:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: rgba(201,168,76,0.15);
+      --cream: #FDF8EE;
+      --dark: #0A0806;
+      --overlay: rgba(8,5,2,0.72);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('./eidMubarak.webp') center/cover no-repeat;
+      filter: brightness(0.35) saturate(0.8);
+      z-index: 0;
+    }
+
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 65%),
+                  radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 65%);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      background: rgba(10,8,6,0.7);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px;
+      padding: 44px 40px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 16px; right: 16px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .card::before { top: 10px; }
+    .card::after  { bottom: 10px; }
+
+    .corner {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.7;
+    }
+    .corner.tl { top: 4px;    left: 4px;   border-width: 1px 0 0 1px; }
+    .corner.tr { top: 4px;    right: 4px;  border-width: 1px 1px 0 0; }
+    .corner.bl { bottom: 4px; left: 4px;   border-width: 0 0 1px 1px; }
+    .corner.br { bottom: 4px; right: 4px;  border-width: 0 1px 1px 0; }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 4px 14px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    h1 span {
+      color: var(--gold-light);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .tagline {
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 14px;
+      color: rgba(253,248,238,0.7);
+      line-height: 1.9;
+      margin-bottom: 32px;
+      padding: 16px 20px;
+      border-left: 2px solid rgba(201,168,76,0.5);
+      background: var(--gold-pale);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+    }
+    .divider::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+    }
+    .divider span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.6);
+      text-transform: uppercase;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .payment-block {
+      margin-bottom: 14px;
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .payment-block:nth-child(1) { animation-delay: 0.1s; }
+    .payment-block:nth-child(2) { animation-delay: 0.2s; }
+    .payment-block:nth-child(3) { animation-delay: 0.3s; }
+
+    .payment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(253,248,238,0.04);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 3px;
+      gap: 12px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .payment-row:hover {
+      background: rgba(201,168,76,0.07);
+      border-color: rgba(201,168,76,0.35);
+    }
+
+    .payment-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .payment-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.25);
+      background: rgba(201,168,76,0.08);
+    }
+
+    .payment-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .payment-detail {
+      font-size: 13px;
+      color: rgba(253,248,238,0.6);
+      font-weight: 300;
+    }
+
+    .payment-number {
+      font-size: 15px;
+      color: var(--cream);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      font-family: 'DM Sans', monospace;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      padding: 7px 16px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+    .copy-btn.copied {
+      background: rgba(100,200,100,0.15);
+      border-color: rgba(100,200,100,0.5);
+      color: #7dcf7d;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      font-family: 'Noto Serif Bengali', serif;
+      font-size: 13px;
+      color: rgba(253,248,238,0.5);
+      line-height: 2;
+      text-align: center;
+    }
+
+    .footer-note strong {
+      color: rgba(201,168,76,0.8);
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(201,168,76,0.95);
+      color: var(--dark);
+      padding: 10px 22px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <div class="card">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div style="text-align:center; margin-bottom: 8px;">
+      <span class="badge">Eid ul-Fitr · 2026</span>
+    </div>
+
+    <div style="text-align:center;">
+      <h1>Eid <span>Money</span> Ltd.</h1>
+      <p class="subtitle">by <br> Radif Tajwar </p>
+    </div>
+
+    <div class="tagline">
+      চাঁদ উঠুক বা নাই উঠুক, কাল কিন্তু ঈদ কনফার্ম 🐐<br>
+      লাইনে দাঁড়িয়ে সালামি নেওয়ার ঝামেলা এখন শেষ —<br>
+      সরাসরি ট্রান্সফার করুন, বরকত পাবেন।
+    </div>
+
+    <div class="divider"><span>Payment Channels</span></div>
+
+    <div class="payment-block">
+      <div class="payment-row">
+        <div class="payment-info">
+          <div class="payment-icon">📲</div>
+          <div>
+            <div class="payment-label">bKash</div>
+            <div class="payment-number">01521-750111</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyText('01521750111', this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="payment-block">
+      <div class="payment-row">
+        <div class="payment-info">
+          <div class="payment-icon">🏛</div>
+          <div>
+            <div class="payment-label">City Bank</div>
+            <div class="payment-number">2394771161001</div>
+            <div class="payment-detail">Gulshan Avenue Branch</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyText('2394771161001', this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="payment-block">
+      <div class="payment-row">
+        <div class="payment-info">
+          <div class="payment-icon">🏦</div>
+          <div>
+            <div class="payment-label">Dutch Bangla Bank</div>
+            <div class="payment-number">3051570375103</div>
+            <div class="payment-detail">Dania Branch</div>
+          </div>
+        </div>
+        <button class="copy-btn" onclick="copyText('3051570375103', this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>সালামি দিলে দোয়া একদম ফ্রি 😇</strong><br>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard</div>
+
+  <script>
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        if (btn) {
+          const original = btn.textContent;
+          btn.textContent = '✓ Done';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+  </script>
+</body>
+</html>
